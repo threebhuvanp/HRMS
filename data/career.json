@@ -1,0 +1,32 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "current_role": "Software Engineer",
+    "next_role": "Senior Software Engineer",
+    "years_since_promotion": 2.2
+  },
+  {
+    "employee_id": "EMP-1057",
+    "current_role": "Product Analyst",
+    "next_role": "Senior Product Analyst",
+    "years_since_promotion": 0.8
+  },
+  {
+    "employee_id": "EMP-1081",
+    "current_role": "Senior Software Engineer",
+    "next_role": "Engineering Lead",
+    "years_since_promotion": 1.1
+  },
+  {
+    "employee_id": "EMP-1093",
+    "current_role": "Sales Executive",
+    "next_role": "Senior Sales Executive",
+    "years_since_promotion": 1.8
+  },
+  {
+    "employee_id": "EMP-1110",
+    "current_role": "Software Engineer",
+    "next_role": "Cloud Engineer",
+    "years_since_promotion": 1.0
+  }
+]

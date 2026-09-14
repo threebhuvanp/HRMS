@@ -1,0 +1,55 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "skills": {
+      "Python": 90,
+      "SQL": 85,
+      "Docker": 70,
+      "Cloud": 40,
+      "Kubernetes": 25,
+      "System Design": 50
+    }
+  },
+  {
+    "employee_id": "EMP-1057",
+    "skills": {
+      "SQL": 90,
+      "Excel": 95,
+      "Python": 65,
+      "Power BI": 85,
+      "Communication": 88
+    }
+  },
+  {
+    "employee_id": "EMP-1081",
+    "skills": {
+      "Python": 95,
+      "Java": 90,
+      "Docker": 90,
+      "Cloud": 82,
+      "Kubernetes": 78,
+      "System Design": 92
+    }
+  },
+  {
+    "employee_id": "EMP-1093",
+    "skills": {
+      "Communication": 82,
+      "CRM": 88,
+      "Sales": 85,
+      "Analytics": 55,
+      "Negotiation": 72
+    }
+  },
+  {
+    "employee_id": "EMP-1110",
+    "skills": {
+      "Python": 86,
+      "Java": 72,
+      "SQL": 80,
+      "Docker": 65,
+      "Cloud": 35,
+      "Kubernetes": 20
+    }
+  }
+]

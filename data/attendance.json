@@ -1,0 +1,37 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "attendance_rate": 87,
+    "previous_attendance_rate": 94,
+    "late_arrivals_change_percent": 22,
+    "absence_trend": "increasing"
+  },
+  {
+    "employee_id": "EMP-1057",
+    "attendance_rate": 96,
+    "previous_attendance_rate": 95,
+    "late_arrivals_change_percent": 0,
+    "absence_trend": "stable"
+  },
+  {
+    "employee_id": "EMP-1081",
+    "attendance_rate": 94,
+    "previous_attendance_rate": 93,
+    "late_arrivals_change_percent": 0,
+    "absence_trend": "stable"
+  },
+  {
+    "employee_id": "EMP-1093",
+    "attendance_rate": 91,
+    "previous_attendance_rate": 93,
+    "late_arrivals_change_percent": 8,
+    "absence_trend": "slightly increasing"
+  },
+  {
+    "employee_id": "EMP-1110",
+    "attendance_rate": 89,
+    "previous_attendance_rate": 90,
+    "late_arrivals_change_percent": 4,
+    "absence_trend": "stable"
+  }
+]

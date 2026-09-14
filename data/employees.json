@@ -1,0 +1,37 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "name": "Arjun Rao",
+    "role": "Software Engineer",
+    "department": "Engineering",
+    "tenure_years": 2.8
+  },
+  {
+    "employee_id": "EMP-1057",
+    "name": "Priya Menon",
+    "role": "Product Analyst",
+    "department": "Product",
+    "tenure_years": 1.4
+  },
+  {
+    "employee_id": "EMP-1081",
+    "name": "Rohan Kapoor",
+    "role": "Senior Software Engineer",
+    "department": "Engineering",
+    "tenure_years": 4.2
+  },
+  {
+    "employee_id": "EMP-1093",
+    "name": "Sneha Iyer",
+    "role": "Sales Executive",
+    "department": "Sales",
+    "tenure_years": 2.1
+  },
+  {
+    "employee_id": "EMP-1110",
+    "name": "Vikram Shah",
+    "role": "Software Engineer",
+    "department": "Engineering",
+    "tenure_years": 1.9
+  }
+]

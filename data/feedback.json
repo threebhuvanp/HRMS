@@ -1,0 +1,22 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "feedback": "Employee has demonstrated good technical ability but appears less engaged recently. Workload has increased and career progression should be discussed."
+  },
+  {
+    "employee_id": "EMP-1057",
+    "feedback": "Consistently delivers high-quality analysis and has demonstrated strong collaboration across teams."
+  },
+  {
+    "employee_id": "EMP-1081",
+    "feedback": "Strong technical leadership and consistently exceeds expectations. Demonstrates interest in taking on architectural responsibilities."
+  },
+  {
+    "employee_id": "EMP-1093",
+    "feedback": "Recent performance has declined. Employee may benefit from additional sales coaching and clearer targets."
+  },
+  {
+    "employee_id": "EMP-1110",
+    "feedback": "Strong contributor with good technical fundamentals. Would benefit from additional exposure to cloud technologies."
+  }
+]

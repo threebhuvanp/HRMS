@@ -1,0 +1,32 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "engagement_score": 61,
+    "previous_engagement_score": 78,
+    "trend": "declining"
+  },
+  {
+    "employee_id": "EMP-1057",
+    "engagement_score": 84,
+    "previous_engagement_score": 82,
+    "trend": "improving"
+  },
+  {
+    "employee_id": "EMP-1081",
+    "engagement_score": 91,
+    "previous_engagement_score": 89,
+    "trend": "improving"
+  },
+  {
+    "employee_id": "EMP-1093",
+    "engagement_score": 68,
+    "previous_engagement_score": 76,
+    "trend": "declining"
+  },
+  {
+    "employee_id": "EMP-1110",
+    "engagement_score": 79,
+    "previous_engagement_score": 81,
+    "trend": "slightly declining"
+  }
+]

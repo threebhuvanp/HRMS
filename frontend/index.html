@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexora Workforce Intelligence</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        header {
+            padding: 24px 40px;
+            border-bottom: 1px solid #334155;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: #94a3b8;
+        }
+
+        main {
+            padding: 30px 40px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .card .number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .employees {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .employees h2 {
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        th {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .risk {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .high {
+            background: #7f1d1d;
+            color: #fecaca;
+        }
+
+        .medium {
+            background: #78350f;
+            color: #fed7aa;
+        }
+
+        .low {
+            background: #14532d;
+            color: #bbf7d0;
+        }
+
+        .employee-name {
+            font-weight: bold;
+        }
+
+        .loading {
+            padding: 30px;
+            text-align: center;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Nexora Workforce Intelligence</h1>
+    <p>AI-driven workforce decision intelligence platform</p>
+</header>
+
+<main>
+
+    <section class="summary">
+
+        <div class="card">
+            <h3>TOTAL EMPLOYEES</h3>
+            <div class="number" id="totalEmployees">-</div>
+        </div>
+
+        <div class="card">
+            <h3>HIGH RISK</h3>
+            <div class="number" id="highRisk">-</div>
+        </div>
+
+        <div class="card">
+            <h3>MEDIUM RISK</h3>
+            <div class="number" id="mediumRisk">-</div>
+        </div>
+
+        <div class="card">
+            <h3>LOW RISK</h3>
+            <div class="number" id="lowRisk">-</div>
+        </div>
+
+    </section>
+
+
+    <section class="employees">
+
+        <h2>Workforce Risk Overview</h2>
+
+        <div id="tableContainer" class="loading">
+            Loading employee data...
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+async function loadEmployees() {
+
+    try {
+
+        const response = await fetch("/api/employees");
+
+        if (!response.ok) {
+            throw new Error("Failed to load employees");
+        }
+
+        const employees = await response.json();
+
+        updateSummary(employees);
+        renderEmployees(employees);
+
+    } catch (error) {
+
+        document.getElementById("tableContainer").innerHTML =
+            "<div class='loading'>Unable to load employee data.</div>";
+
+        console.error(error);
+    }
+}
+
+
+function updateSummary(employees) {
+
+    document.getElementById("totalEmployees").textContent =
+        employees.length;
+
+    document.getElementById("highRisk").textContent =
+        employees.filter(e => e.risk.risk_level === "HIGH").length;
+
+    document.getElementById("mediumRisk").textContent =
+        employees.filter(e => e.risk.risk_level === "MEDIUM").length;
+
+    document.getElementById("lowRisk").textContent =
+        employees.filter(e => e.risk.risk_level === "LOW").length;
+}
+
+
+function renderEmployees(employees) {
+
+    let html = `
+        <table>
+
+            <thead>
+                <tr>
+                    <th>EMPLOYEE</th>
+                    <th>ROLE</th>
+                    <th>DEPARTMENT</th>
+                    <th>RISK SCORE</th>
+                    <th>RISK LEVEL</th>
+                </tr>
+            </thead>
+
+            <tbody>
+    `;
+
+    employees.forEach(employee => {
+
+        const riskLevel = employee.risk.risk_level;
+
+        html += `
+            <tr>
+
+                <td class="employee-name">
+                    ${employee.name}
+                    <br>
+                    <small>${employee.employee_id}</small>
+                </td>
+
+                <td>${employee.role}</td>
+
+                <td>${employee.department}</td>
+
+                <td>${employee.risk.risk_score}</td>
+
+                <td>
+                    <span class="risk ${riskLevel.toLowerCase()}">
+                        ${riskLevel}
+                    </span>
+                </td>
+
+            </tr>
+        `;
+    });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    document.getElementById("tableContainer").innerHTML = html;
+}
+
+
+loadEmployees();
+
+</script>
+
+</body>
+</html>

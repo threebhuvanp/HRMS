@@ -1,0 +1,37 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "performance_score": 7.1,
+    "previous_performance_score": 8.2,
+    "goal_completion_percent": 72,
+    "previous_goal_completion_percent": 88
+  },
+  {
+    "employee_id": "EMP-1057",
+    "performance_score": 8.7,
+    "previous_performance_score": 8.5,
+    "goal_completion_percent": 94,
+    "previous_goal_completion_percent": 92
+  },
+  {
+    "employee_id": "EMP-1081",
+    "performance_score": 9.2,
+    "previous_performance_score": 9.0,
+    "goal_completion_percent": 97,
+    "previous_goal_completion_percent": 95
+  },
+  {
+    "employee_id": "EMP-1093",
+    "performance_score": 6.8,
+    "previous_performance_score": 7.9,
+    "goal_completion_percent": 64,
+    "previous_goal_completion_percent": 79
+  },
+  {
+    "employee_id": "EMP-1110",
+    "performance_score": 8.1,
+    "previous_performance_score": 8.3,
+    "goal_completion_percent": 86,
+    "previous_goal_completion_percent": 88
+  }
+]
