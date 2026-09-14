@@ -3,158 +3,1149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Intelligence</title>
+
+    <title>Nexora | Employee Intelligence</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green-primary: #16a34a;
+            --green-dark: #087f3d;
+            --green-light: #dcfce7;
+            --green-soft: #ecfdf3;
+
+            --text-dark: #10251a;
+            --text-muted: #6b7d72;
+
+            --shadow-soft:
+                0 20px 60px rgba(20, 80, 45, 0.08);
+
+            --shadow-hover:
+                0 25px 70px rgba(20, 120, 65, 0.15);
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text-dark);
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(34, 197, 94, 0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(16, 185, 129, 0.10),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f7fff9 0%,
+                    #ffffff 50%,
+                    #f0fdf4 100%
+                );
+
+            overflow-x: hidden;
         }
 
-        header {
-            padding: 24px 40px;
-            border-bottom: 1px solid #334155;
+        /* BACKGROUND */
+
+        .dashboard-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
         }
 
-        header h1 {
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(3px);
+            opacity: 0.5;
+        }
+
+        .orb-one {
+            width: 280px;
+            height: 280px;
+            background: rgba(34, 197, 94, 0.14);
+            top: -100px;
+            left: 20%;
+        }
+
+        .orb-two {
+            width: 350px;
+            height: 350px;
+            background: rgba(16, 185, 129, 0.10);
+            right: -150px;
+            top: 35%;
+        }
+
+        .orb-three {
+            width: 220px;
+            height: 220px;
+            background: rgba(74, 222, 128, 0.12);
+            bottom: -80px;
+            left: 40%;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 18px;
+            top: 18px;
+            bottom: 18px;
+
+            width: 250px;
+            padding: 24px 16px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            border-radius: 26px;
+
+            box-shadow: var(--shadow-soft);
+
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 4px 8px 28px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            color: white;
+            font-size: 20px;
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #22c55e,
+                    #087f3d
+                );
+
+            box-shadow:
+                0 8px 20px rgba(22, 163, 74, 0.25);
+        }
+
+        .brand h2 {
             margin: 0;
-            font-size: 28px;
+            font-size: 17px;
         }
 
-        header p {
-            margin: 8px 0 0;
-            color: #94a3b8;
+        .brand span {
+            display: block;
+            margin-top: 3px;
+
+            font-size: 9px;
+            color: var(--text-muted);
+
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
         }
 
-        main {
-            padding: 30px 40px;
-            max-width: 1200px;
-            margin: auto;
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
         }
 
-        .card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
+        .nav-item {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            padding: 12px;
+
+            border: none;
+            border-radius: 15px;
+
+            background: transparent;
+            color: var(--text-muted);
+
+            text-align: left;
+            cursor: pointer;
+
+            transition: 0.2s ease;
         }
 
-        .profile {
+        .nav-item:hover {
+            color: var(--green-dark);
+            background: rgba(220, 252, 231, 0.55);
+            transform: translateX(3px);
+        }
+
+        .nav-item.active {
+            color: var(--green-dark);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(220, 252, 231, 0.95),
+                    rgba(255, 255, 255, 0.75)
+                );
+
+            box-shadow:
+                inset 0 0 0 1px
+                rgba(34, 197, 94, 0.10);
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: var(--green-soft);
+            color: var(--green-dark);
+
+            font-size: 13px;
+        }
+
+        .nav-item strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .nav-item small {
+            display: block;
+            margin-top: 2px;
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px;
+
+            border-radius: 15px;
+
+            background: rgba(236, 253, 245, 0.72);
+            border: 1px solid rgba(34, 197, 94, 0.12);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+            background: #22c55e;
+
+            box-shadow:
+                0 0 0 5px
+                rgba(34, 197, 94, 0.12);
+        }
+
+        .ai-status strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .ai-status small {
+            color: var(--text-muted);
+            font-size: 9px;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 286px;
+            padding: 36px 38px 30px;
+
+            max-width: 1500px;
+        }
+
+        /* TOP */
+
+        .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            margin-bottom: 28px;
         }
 
-        .employee-name {
-            font-size: 26px;
-            font-weight: bold;
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 13px;
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(34, 197, 94, 0.12);
+
+            background: rgba(255, 255, 255, 0.70);
+
+            color: var(--green-dark);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background: var(--green-soft);
+        }
+
+        .page-label {
+            color: var(--green-primary);
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+
+        /* GLASS */
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.64);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.85);
+
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* PROFILE */
+
+        .profile-card {
+            padding: 28px;
+
+            border-radius: 24px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 25px;
+
+            margin-bottom: 20px;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .employee-avatar {
+            width: 68px;
+            height: 68px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            color: white;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #22c55e,
+                    #087f3d
+                );
+
+            box-shadow:
+                0 12px 28px
+                rgba(22, 163, 74, 0.20);
+        }
+
+        .profile-info h1 {
+            margin: 0;
+
+            font-size: 30px;
+            letter-spacing: -1.3px;
+        }
+
+        .profile-info p {
+            margin: 6px 0 0;
+
+            color: var(--text-muted);
+            font-size: 12px;
         }
 
         .employee-id {
-            color: #94a3b8;
-            margin-top: 6px;
+            margin-top: 7px;
+
+            color: #8b9991;
+            font-size: 9px;
+            letter-spacing: 0.5px;
         }
 
-        .risk-box {
-            text-align: center;
+        .risk-summary {
+            text-align: right;
+        }
+
+        .risk-label {
+            display: block;
+
+            color: var(--text-muted);
+
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
         .risk-score {
+            margin-top: 4px;
+
             font-size: 42px;
-            font-weight: bold;
+            font-weight: 800;
+            letter-spacing: -2px;
         }
 
-        .risk-level {
-            font-weight: bold;
-            color: #fca5a5;
+        .risk-badge {
+            display: inline-block;
+
+            margin-top: 4px;
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
+
+        .risk-badge.high {
+            color: #b91c1c;
+            background: #fee2e2;
+        }
+
+        .risk-badge.medium {
+            color: #c2410c;
+            background: #ffedd5;
+        }
+
+        .risk-badge.low {
+            color: #15803d;
+            background: #dcfce7;
+        }
+
+        /* GRID */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 0.85fr)
+                minmax(0, 1.55fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            padding: 22px;
+            border-radius: 22px;
+        }
+
+        .section-label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: var(--green-primary);
+
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+
+        .card h2 {
+            margin: 0 0 20px;
+
+            font-size: 18px;
+            letter-spacing: -0.6px;
+        }
+
+        /* RISK FACTORS */
+
+        .factor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .factor {
+            padding: 14px;
+
+            border-radius: 15px;
+
+            background: rgba(248, 255, 250, 0.72);
+
+            border: 1px solid rgba(34, 197, 94, 0.07);
+        }
+
+        .factor-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .factor-name {
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .impact {
+            padding: 4px 7px;
+
+            border-radius: 12px;
+
+            background: #ffedd5;
+            color: #c2410c;
+
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .factor p {
+            margin: 6px 0 0;
+
+            color: var(--text-muted);
+
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .no-factors {
+            padding: 25px;
+
+            text-align: center;
+
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+
+        /* AI */
+
+        .ai-card {
+            min-height: 400px;
+        }
+
+        .ai-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .ai-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            color: var(--green-dark);
+            background: var(--green-soft);
+
+            font-size: 17px;
+        }
+
+        .ai-heading h2 {
+            margin: 0;
+        }
+
+        .ai-heading small {
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--text-muted);
+            font-size: 9px;
+        }
+
+        .ai-output {
+            padding: 18px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(248, 255, 250, 0.78);
+
+            border:
+                1px solid rgba(34, 197, 94, 0.08);
+
+            color: #405348;
+
+            white-space: pre-wrap;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size: 10px;
+            line-height: 1.7;
+
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .ai-output::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .ai-output::-webkit-scrollbar-thumb {
+            background: #cdebd8;
+            border-radius: 10px;
+        }
+
+        /* LOADING */
 
         .loading {
-            text-align: center;
-            padding: 40px;
-            color: #94a3b8;
+            min-height: 300px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--text-muted);
+
+            font-size: 11px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 20px;
+
+            display: flex;
+            justify-content: space-between;
+
+            color: #8a9890;
+            font-size: 8px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+                width: 215px;
+            }
+
+            .main {
+                margin-left: 245px;
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .profile-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .risk-summary {
+                text-align: left;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .sidebar {
+                position: relative;
+
+                left: auto;
+                top: auto;
+                bottom: auto;
+
+                width: calc(100% - 24px);
+                margin: 12px;
+
+                height: auto;
+                border-radius: 20px;
+            }
+
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav-item {
+                min-width: 120px;
+            }
+
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px 14px;
+            }
+
+            .profile-left {
+                align-items: flex-start;
+            }
+
+            .profile-info h1 {
+                font-size: 25px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 5px;
+            }
         }
     </style>
 </head>
 
+
 <body>
 
-<header>
-    <h1>Nexora Workforce Intelligence</h1>
-    <p>Employee Intelligence Profile</p>
-</header>
+<div class="dashboard-bg">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+</div>
 
-<main>
 
-    <div id="content" class="loading">
-        Loading employee intelligence...
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            N
+        </div>
+
+        <div>
+            <h2>Nexora</h2>
+            <span>Workforce Intelligence</span>
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <button
+            class="nav-item"
+            onclick="goDashboard()"
+        >
+            <span class="nav-icon">⌂</span>
+
+            <div>
+                <strong>Overview</strong>
+                <small>Workforce intelligence</small>
+            </div>
+        </button>
+
+
+        <button class="nav-item active">
+
+            <span class="nav-icon">♙</span>
+
+            <div>
+                <strong>Employees</strong>
+                <small>People intelligence</small>
+            </div>
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <span class="nav-icon">◈</span>
+
+            <div>
+                <strong>Performance</strong>
+                <small>Performance intelligence</small>
+            </div>
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <span class="nav-icon">⚠</span>
+
+            <div>
+                <strong>Workforce Risk</strong>
+                <small>Risk indicators</small>
+            </div>
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <span class="nav-icon">✦</span>
+
+            <div>
+                <strong>AI Insights</strong>
+                <small>Smart recommendations</small>
+            </div>
+
+        </button>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="ai-status">
+
+            <div class="status-dot"></div>
+
+            <div>
+                <strong>Qwen AI Engine</strong>
+                <small>System ready</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div>
+            <span class="page-label">
+                EMPLOYEE INTELLIGENCE
+            </span>
+        </div>
+
+        <button
+            class="back-button"
+            onclick="goDashboard()"
+        >
+            ← Workforce Overview
+        </button>
+
+    </div>
+
+
+    <div id="content">
+
+        <div class="loading">
+            Loading employee intelligence...
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        <span>
+            Nexora Workforce Intelligence
+        </span>
+
+        <span>
+            Qwen-powered workforce analysis • Synthetic dataset
+        </span>
+
     </div>
 
 </main>
+
 
 <script>
 
 async function loadEmployee() {
 
-    const employeeId = window.location.pathname.split("/").pop();
+    const employeeId =
+        window.location.pathname.split("/").pop();
 
     try {
 
-        const response = await fetch(`/api/intelligence/${employeeId}`);
+        const response =
+            await fetch(`/api/intelligence/${employeeId}`);
 
         if (!response.ok) {
             throw new Error("Employee not found");
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        const employee = data.employee;
-        const risk = data.risk;
-        const aiAnalysis = data.ai_analysis;
-        
+        const employee =
+            data.employee;
+
+        const risk =
+            data.risk;
+
+        const aiAnalysis =
+            data.ai_analysis;
+
+
+        const initials =
+            employee.name
+                .split(" ")
+                .map(name => name[0])
+                .slice(0, 2)
+                .join("")
+                .toUpperCase();
+
+
+        const riskLevel =
+            risk.risk_level.toLowerCase();
+
+
+        let factorsHTML = "";
+
+
+        if (risk.factors && risk.factors.length > 0) {
+
+            factorsHTML =
+                risk.factors.map(factor => `
+
+                    <div class="factor">
+
+                        <div class="factor-top">
+
+                            <span class="factor-name">
+                                ${factor.factor}
+                            </span>
+
+                            <span class="impact">
+                                +${factor.impact}
+                            </span>
+
+                        </div>
+
+                        <p>
+                            ${factor.evidence}
+                        </p>
+
+                    </div>
+
+                `).join("");
+
+        } else {
+
+            factorsHTML = `
+                <div class="no-factors">
+                    No significant risk factors detected.
+                </div>
+            `;
+        }
+
+
         document.getElementById("content").innerHTML = `
-            <div class="card profile">
-                ...
-            </div>
 
-            <div class="card">
-                <h2>Risk Factors</h2>
+            <!-- PROFILE -->
 
-                ${risk.factors.map(factor => `
-                    <p>
-                        <strong>${factor.factor}</strong>
-                        (+${factor.impact})
-                        <br>
-                        ${factor.evidence}
-                    </p>
-                `).join("")}
+            <section class="profile-card glass-card">
 
-            </div>
+                <div class="profile-left">
 
-            <div class="card">
-                <h2>AI Workforce Insight</h2>
+                    <div class="employee-avatar">
+                        ${initials}
+                    </div>
 
-                <pre style="
-                    white-space: pre-wrap;
-                    font-family: Arial, sans-serif;
-                    line-height: 1.6;
-                    color: #cbd5e1;
-                ">${aiAnalysis}</pre>
-            </div>
+                    <div class="profile-info">
+
+                        <h1>
+                            ${employee.name}
+                        </h1>
+
+                        <p>
+                            ${employee.role}
+                            ·
+                            ${employee.department}
+                        </p>
+
+                        <div class="employee-id">
+                            ${employee.employee_id}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="risk-summary">
+
+                    <span class="risk-label">
+                        WORKFORCE RISK SCORE
+                    </span>
+
+                    <div class="risk-score">
+                        ${risk.risk_score}
+                    </div>
+
+                    <span class="risk-badge ${riskLevel}">
+                        ${risk.risk_level} RISK
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTENT -->
+
+            <section class="content-grid">
+
+
+                <!-- RISK FACTORS -->
+
+                <div class="card glass-card">
+
+                    <span class="section-label">
+                        EVIDENCE SIGNALS
+                    </span>
+
+                    <h2>
+                        Risk Factors
+                    </h2>
+
+                    <div class="factor-list">
+
+                        ${factorsHTML}
+
+                    </div>
+
+                </div>
+
+
+                <!-- AI INTELLIGENCE -->
+
+                <div class="card glass-card ai-card">
+
+                    <div class="ai-heading">
+
+                        <div class="ai-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                AI Workforce Insight
+                            </h2>
+
+                            <small>
+                                Cross-source reasoning powered by Qwen3
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-output">
+                        ${escapeHTML(aiAnalysis)}
+                    </div>
+
+                </div>
+
+
+            </section>
         `;
-        
-        
+
     } catch (error) {
 
-        document.getElementById("content").innerHTML =
-            `<div class="loading">Unable to load employee data.</div>`;
+        document.getElementById("content").innerHTML = `
+
+            <div class="card glass-card loading">
+
+                Unable to load employee intelligence.
+
+            </div>
+
+        `;
 
         console.error(error);
     }
 }
+
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text || "";
+
+    return div.innerHTML;
+}
+
+
+function goDashboard() {
+
+    window.location.href = "/";
+}
+
 
 loadEmployee();
 
