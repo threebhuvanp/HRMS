@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Intelligence</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        header {
+            padding: 24px 40px;
+            border-bottom: 1px solid #334155;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: #94a3b8;
+        }
+
+        main {
+            padding: 30px 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .employee-name {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .employee-id {
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .risk-box {
+            text-align: center;
+        }
+
+        .risk-score {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        .risk-level {
+            font-weight: bold;
+            color: #fca5a5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Nexora Workforce Intelligence</h1>
+    <p>Employee Intelligence Profile</p>
+</header>
+
+<main>
+
+    <div id="content" class="loading">
+        Loading employee intelligence...
+    </div>
+
+</main>
+
+<script>
+
+async function loadEmployee() {
+
+    const employeeId = window.location.pathname.split("/").pop();
+
+    try {
+
+        const response = await fetch(`/api/employees/${employeeId}`);
+
+        if (!response.ok) {
+            throw new Error("Employee not found");
+        }
+
+        const data = await response.json();
+
+        const employee = data.profile;
+        const risk = data.risk;
+
+        document.getElementById("content").innerHTML = `
+            <div class="card profile">
+
+                <div>
+                    <div class="employee-name">
+                        ${employee.name}
+                    </div>
+
+                    <div class="employee-id">
+                        ${employee.employee_id}
+                    </div>
+
+                    <p>
+                        ${employee.role} · ${employee.department}
+                    </p>
+                </div>
+
+                <div class="risk-box">
+                    <div class="risk-score">
+                        ${risk.risk_score}
+                    </div>
+
+                    <div class="risk-level">
+                        ${risk.risk_level} RISK
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+                <h2>Risk Factors</h2>
+
+                ${risk.factors.map(factor => `
+                    <p>
+                        <strong>${factor.factor}</strong>
+                        (+${factor.impact})
+                        <br>
+                        ${factor.evidence}
+                    </p>
+                `).join("")}
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        document.getElementById("content").innerHTML =
+            `<div class="loading">Unable to load employee data.</div>`;
+
+        console.error(error);
+    }
+}
+
+loadEmployee();
+
+</script>
+
+</body>
+</html>

@@ -1,3 +1,4 @@
+from intelligence.qwen_engine import build_evidence, analyze_employee
 from flask import Flask, jsonify, send_from_directory
 from dataloader import load_all_data
 from risk_engine import calculate_risk

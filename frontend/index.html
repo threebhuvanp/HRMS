@@ -227,7 +227,7 @@ function renderEmployees(employees) {
         <table>
 
             <thead>
-                <tr onclick="openEmployee('${employee.employee_id}')" style="cursor: pointer;">
+                <tr>
                     <th>EMPLOYEE</th>
                     <th>ROLE</th>
                     <th>DEPARTMENT</th>
@@ -244,7 +244,7 @@ function renderEmployees(employees) {
         const riskLevel = employee.risk.risk_level;
 
         html += `
-            <tr>
+            <tr onclick="openEmployee('${employee.employee_id}')" style="cursor: pointer;">
 
                 <td class="employee-name">
                     ${employee.name}
