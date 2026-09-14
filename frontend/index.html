@@ -1,1235 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nexora | Workforce Intelligence</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <meta
+        name="description"
+        content="WorkforceAI - Intelligent Workforce Management"
+    >
 
-        :root {
-            --green-primary: #16a34a;
-            --green-dark: #087f3d;
-            --green-light: #dcfce7;
-            --green-soft: #ecfdf3;
+    <title>
+        WorkforceAI | Intelligent Workforce Management
+    </title>
 
-            --white: #ffffff;
-            --text-dark: #10251a;
-            --text-muted: #6b7d72;
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-            --border-glass: rgba(255, 255, 255, 0.72);
-
-            --shadow-soft:
-                0 20px 60px rgba(20, 80, 45, 0.08);
-
-            --shadow-hover:
-                0 25px 70px rgba(20, 120, 65, 0.15);
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-
-            color: var(--text-dark);
-
-            background:
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(34, 197, 94, 0.12),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 90% 80%,
-                    rgba(16, 185, 129, 0.10),
-                    transparent 30%
-                ),
-                linear-gradient(
-                    135deg,
-                    #f7fff9 0%,
-                    #ffffff 50%,
-                    #f0fdf4 100%
-                );
-
-            overflow-x: hidden;
-        }
-
-        /* BACKGROUND */
-
-        .dashboard-bg {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(3px);
-            opacity: 0.5;
-        }
-
-        .orb-one {
-            width: 280px;
-            height: 280px;
-            background: rgba(34, 197, 94, 0.14);
-            top: -100px;
-            left: 20%;
-        }
-
-        .orb-two {
-            width: 350px;
-            height: 350px;
-            background: rgba(16, 185, 129, 0.10);
-            right: -150px;
-            top: 35%;
-        }
-
-        .orb-three {
-            width: 220px;
-            height: 220px;
-            background: rgba(74, 222, 128, 0.12);
-            bottom: -80px;
-            left: 40%;
-        }
-
-        /* SIDEBAR */
-
-        .sidebar {
-            position: fixed;
-            left: 18px;
-            top: 18px;
-            bottom: 18px;
-
-            width: 250px;
-            padding: 24px 16px;
-
-            display: flex;
-            flex-direction: column;
-
-            background: rgba(255, 255, 255, 0.68);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-
-            border: 1px solid var(--border-glass);
-            border-radius: 26px;
-
-            box-shadow: var(--shadow-soft);
-
-            z-index: 10;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            padding: 4px 8px 28px;
-        }
-
-        .brand-icon {
-            width: 42px;
-            height: 42px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 13px;
-
-            color: white;
-            font-size: 20px;
-            font-weight: 800;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #22c55e,
-                    #087f3d
-                );
-
-            box-shadow:
-                0 8px 20px rgba(22, 163, 74, 0.25);
-        }
-
-        .brand h2 {
-            margin: 0;
-            font-size: 17px;
-            letter-spacing: -0.4px;
-        }
-
-        .brand span {
-            display: block;
-            margin-top: 3px;
-
-            font-size: 9px;
-            color: var(--text-muted);
-
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .nav-item {
-            width: 100%;
-
-            display: flex;
-            align-items: center;
-            gap: 13px;
-
-            padding: 12px;
-
-            border: none;
-            border-radius: 15px;
-
-            background: transparent;
-            color: var(--text-muted);
-
-            text-align: left;
-        }
-
-        .nav-item.active {
-            color: var(--green-dark);
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(220, 252, 231, 0.95),
-                    rgba(255, 255, 255, 0.75)
-                );
-
-            box-shadow:
-                inset 0 0 0 1px
-                rgba(34, 197, 94, 0.10);
-        }
-
-        .nav-icon {
-            width: 28px;
-            height: 28px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 9px;
-
-            background: var(--green-soft);
-            color: var(--green-dark);
-
-            font-size: 13px;
-        }
-
-        .nav-item strong {
-            display: block;
-            font-size: 13px;
-        }
-
-        .nav-item small {
-            display: block;
-            margin-top: 2px;
-
-            font-size: 9px;
-            opacity: 0.7;
-        }
-
-        .sidebar-bottom {
-            margin-top: auto;
-        }
-
-        .ai-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            padding: 13px;
-            margin-bottom: 12px;
-
-            border-radius: 15px;
-
-            background: rgba(236, 253, 245, 0.72);
-            border: 1px solid rgba(34, 197, 94, 0.12);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-
-            border-radius: 50%;
-            background: #22c55e;
-
-            box-shadow:
-                0 0 0 5px
-                rgba(34, 197, 94, 0.12);
-        }
-
-        .ai-status strong {
-            display: block;
-            font-size: 11px;
-        }
-
-        .ai-status small {
-            color: var(--text-muted);
-            font-size: 9px;
-        }
-
-        /* MAIN */
-
-        .dashboard-main {
-            margin-left: 286px;
-            padding: 36px 38px 30px;
-
-            max-width: 1500px;
-        }
-
-        /* HEADER */
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-
-            gap: 30px;
-            margin-bottom: 28px;
-        }
-
-        .eyebrow {
-            display: inline-block;
-
-            margin-bottom: 10px;
-            padding: 6px 10px;
-
-            border-radius: 30px;
-
-            background: rgba(220, 252, 231, 0.8);
-            color: var(--green-dark);
-
-            font-size: 9px;
-            font-weight: 800;
-            letter-spacing: 1.2px;
-        }
-
-        .dashboard-header h1 {
-            margin: 0;
-
-            font-size: clamp(34px, 4vw, 56px);
-            line-height: 1;
-
-            letter-spacing: -2.8px;
-        }
-
-        .dashboard-header h1 span {
-            color: var(--green-primary);
-        }
-
-        .dashboard-header p {
-            max-width: 570px;
-            margin: 14px 0 0;
-
-            color: var(--text-muted);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .refresh-button {
-            width: 42px;
-            height: 42px;
-
-            border-radius: 13px;
-
-            border: 1px solid rgba(34, 197, 94, 0.15);
-
-            background: rgba(255, 255, 255, 0.72);
-            color: var(--green-dark);
-
-            font-size: 20px;
-            cursor: pointer;
-
-            transition: 0.25s;
-        }
-
-        .refresh-button:hover {
-            transform: rotate(90deg);
-            box-shadow:
-                0 8px 25px
-                rgba(20, 100, 50, 0.10);
-        }
-
-        /* AI BANNER */
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.64);
-
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-
-            border: 1px solid rgba(255, 255, 255, 0.85);
-
-            box-shadow: var(--shadow-soft);
-        }
-
-        .ai-banner {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-
-            padding: 19px 22px;
-            border-radius: 20px;
-
-            margin-bottom: 22px;
-        }
-
-        .ai-banner-icon {
-            width: 45px;
-            height: 45px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            flex-shrink: 0;
-
-            border-radius: 14px;
-
-            color: white;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #22c55e,
-                    #047857
-                );
-
-            font-size: 20px;
-
-            box-shadow:
-                0 8px 20px
-                rgba(22, 163, 74, 0.20);
-        }
-
-        .ai-banner-content {
-            flex: 1;
-        }
-
-        .ai-label {
-            color: var(--green-primary);
-
-            font-size: 8px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .ai-banner h3 {
-            margin: 4px 0;
-            font-size: 15px;
-        }
-
-        .ai-banner p {
-            margin: 0;
-
-            color: var(--text-muted);
-            font-size: 11px;
-        }
-
-        .ai-banner-badge {
-            padding: 7px 10px;
-
-            border-radius: 20px;
-
-            background: var(--green-soft);
-            color: var(--green-dark);
-
-            font-size: 8px;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-        }
-
-        /* KPI */
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            min-height: 145px;
-            padding: 20px;
-
-            border-radius: 20px;
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .stat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stat-icon {
-            width: 34px;
-            height: 34px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 10px;
-            font-size: 15px;
-        }
-
-        .green {
-            color: #15803d;
-            background: #dcfce7;
-        }
-
-        .orange {
-            color: #c2410c;
-            background: #ffedd5;
-        }
-
-        .blue {
-            color: #0369a1;
-            background: #e0f2fe;
-        }
-
-        .purple {
-            color: #7e22ce;
-            background: #f3e8ff;
-        }
-
-        .stat-label {
-            color: #819088;
-
-            font-size: 8px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .stat-value {
-            margin-top: 13px;
-
-            font-size: 34px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-        }
-
-        .stat-bottom {
-            display: flex;
-            justify-content: space-between;
-
-            margin-top: 7px;
-
-            color: var(--text-muted);
-            font-size: 9px;
-        }
-
-        .stat-positive {
-            color: var(--green-primary);
-            font-weight: 700;
-        }
-
-        .stat-warning {
-            color: #ea580c;
-            font-weight: 700;
-        }
-
-        /* EMPLOYEE CARD */
-
-        .employee-card {
-            padding: 22px;
-            border-radius: 22px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .section-label {
-            display: block;
-            margin-bottom: 5px;
-
-            color: var(--green-primary);
-
-            font-size: 8px;
-            font-weight: 800;
-            letter-spacing: 1.2px;
-        }
-
-        .card-header h2 {
-            margin: 0;
-
-            font-size: 18px;
-            letter-spacing: -0.6px;
-        }
-
-        .live-pill {
-            padding: 6px 9px;
-
-            border-radius: 20px;
-
-            color: var(--green-dark);
-            background: var(--green-soft);
-
-            font-size: 8px;
-            font-weight: 800;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 650px;
-        }
-
-        th {
-            padding: 11px 10px;
-
-            border-bottom:
-                1px solid rgba(0, 0, 0, 0.05);
-
-            color: #84928a;
-
-            font-size: 8px;
-            text-align: left;
-            letter-spacing: 0.8px;
-        }
-
-        td {
-            padding: 15px 10px;
-
-            border-bottom:
-                1px solid rgba(0, 0, 0, 0.04);
-
-            color: #506158;
-            font-size: 10px;
-        }
-
-        tbody tr {
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        tbody tr:hover {
-            background: rgba(236, 253, 245, 0.65);
-            transform: translateX(2px);
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .employee-name {
-            color: var(--text-dark);
-            font-weight: 700;
-        }
-
-        .employee-code {
-            display: block;
-            margin-top: 2px;
-
-            color: #8b9991;
-            font-size: 8px;
-            font-weight: 400;
-        }
-
-        .risk {
-            display: inline-block;
-
-            padding: 5px 9px;
-            border-radius: 20px;
-
-            font-size: 8px;
-            font-weight: 800;
-        }
-
-        .risk.high {
-            color: #b91c1c;
-            background: #fee2e2;
-        }
-
-        .risk.medium {
-            color: #c2410c;
-            background: #ffedd5;
-        }
-
-        .risk.low {
-            color: #15803d;
-            background: #dcfce7;
-        }
-
-        .score {
-            font-weight: 800;
-            color: var(--text-dark);
-        }
-
-        .loading {
-            padding: 35px;
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        /* FOOTER */
-
-        .dashboard-footer {
-            display: flex;
-            justify-content: space-between;
-
-            padding: 18px 3px 5px;
-
-            color: #8a9890;
-            font-size: 8px;
-        }
-
-        /* RESPONSIVE */
-
-        @media (max-width: 1100px) {
-
-            .sidebar {
-                width: 215px;
-            }
-
-            .dashboard-main {
-                margin-left: 245px;
-                padding-left: 25px;
-                padding-right: 25px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 760px) {
-
-            .sidebar {
-                position: relative;
-
-                left: auto;
-                top: auto;
-                bottom: auto;
-
-                width: calc(100% - 24px);
-                margin: 12px;
-
-                height: auto;
-                border-radius: 20px;
-            }
-
-            .sidebar-nav {
-                flex-direction: row;
-                overflow-x: auto;
-            }
-
-            .nav-item {
-                min-width: 120px;
-            }
-
-            .sidebar-bottom {
-                display: none;
-            }
-
-            .dashboard-main {
-                margin-left: 0;
-                padding: 20px 14px;
-            }
-
-            .dashboard-header {
-                flex-direction: column;
-            }
-
-            .header-right {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .ai-banner {
-                align-items: flex-start;
-            }
-
-            .ai-banner-badge {
-                display: none;
-            }
-
-            .card-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 450px) {
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-header h1 {
-                font-size: 38px;
-            }
-        }
-    </style>
 </head>
+
 
 <body>
 
-<div class="dashboard-bg">
-    <div class="orb orb-one"></div>
-    <div class="orb orb-two"></div>
-    <div class="orb orb-three"></div>
-</div>
+    <!-- Background decorative elements -->
 
+    <div class="background-orb orb-one"></div>
 
-<!-- SIDEBAR -->
+    <div class="background-orb orb-two"></div>
 
-<aside class="sidebar">
 
-    <div class="brand">
-        <div class="brand-icon">N</div>
+    <main class="page">
 
-        <div>
-            <h2>Nexora</h2>
-            <span>Workforce Intelligence</span>
-        </div>
-    </div>
 
-    <nav class="sidebar-nav">
+        <!-- =========================================
+             LEFT SIDE
+        ========================================== -->
 
-        <button class="nav-item active">
-            <span class="nav-icon">⌂</span>
-            <div>
-                <strong>Overview</strong>
-                <small>Workforce intelligence</small>
-            </div>
-        </button>
+        <section class="hero-section">
 
-        <button class="nav-item">
-            <span class="nav-icon">♙</span>
-            <div>
-                <strong>Employees</strong>
-                <small>People directory</small>
-            </div>
-        </button>
+            <div class="brand">
 
-        <button class="nav-item">
-            <span class="nav-icon">◈</span>
-            <div>
-                <strong>Performance</strong>
-                <small>Performance intelligence</small>
-            </div>
-        </button>
+                <div class="brand-icon">
+                    W
+                </div>
 
-        <button class="nav-item">
-            <span class="nav-icon">⚠</span>
-            <div>
-                <strong>Workforce Risk</strong>
-                <small>Risk indicators</small>
-            </div>
-        </button>
-
-        <button class="nav-item">
-            <span class="nav-icon">✦</span>
-            <div>
-                <strong>AI Insights</strong>
-                <small>Smart recommendations</small>
-            </div>
-        </button>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-        <div class="ai-status">
-            <div class="status-dot"></div>
-
-            <div>
-                <strong>Qwen AI Engine</strong>
-                <small>System ready</small>
-            </div>
-        </div>
-
-    </div>
-
-</aside>
-
-
-<!-- MAIN -->
-
-<main class="dashboard-main">
-
-    <header class="dashboard-header">
-
-        <div>
-
-            <div class="eyebrow">
-                AI-POWERED WORKFORCE INTELLIGENCE
-            </div>
-
-            <h1>
-                Workforce
-                <span>Overview</span>
-            </h1>
-
-            <p>
-                Understand your people, identify workforce patterns,
-                and make evidence-backed HR decisions.
-            </p>
-
-        </div>
-
-        <div class="header-right">
-
-            <button
-                class="refresh-button"
-                onclick="loadEmployees()"
-                title="Refresh dashboard"
-            >
-                ↻
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- AI BANNER -->
-
-    <section class="ai-banner glass-card">
-
-        <div class="ai-banner-icon">
-            ✦
-        </div>
-
-        <div class="ai-banner-content">
-
-            <span class="ai-label">
-                NEXORA INTELLIGENCE ENGINE
-            </span>
-
-            <h3>
-                Workforce intelligence layer is active.
-            </h3>
-
-            <p>
-                Employee signals are combined into risk indicators
-                and AI-assisted workforce insights.
-            </p>
-
-        </div>
-
-        <div class="ai-banner-badge">
-            ● LIVE
-        </div>
-
-    </section>
-
-
-    <!-- KPI CARDS -->
-
-    <section class="stats-grid">
-
-        <div class="stat-card glass-card">
-
-            <div class="stat-top">
-                <div class="stat-icon green">♙</div>
-                <span class="stat-label">WORKFORCE</span>
-            </div>
-
-            <div class="stat-value" id="totalEmployees">-</div>
-
-            <div class="stat-bottom">
-                <span class="stat-positive">● Active dataset</span>
-                <span>Employees</span>
-            </div>
-
-        </div>
-
-
-        <div class="stat-card glass-card">
-
-            <div class="stat-top">
-                <div class="stat-icon orange">⚠</div>
-                <span class="stat-label">HIGH RISK</span>
-            </div>
-
-            <div class="stat-value" id="highRisk">-</div>
-
-            <div class="stat-bottom">
-                <span class="stat-warning">● Requires attention</span>
-                <span>Employees</span>
-            </div>
-
-        </div>
-
-
-        <div class="stat-card glass-card">
-
-            <div class="stat-top">
-                <div class="stat-icon blue">◈</div>
-                <span class="stat-label">MEDIUM RISK</span>
-            </div>
-
-            <div class="stat-value" id="mediumRisk">-</div>
-
-            <div class="stat-bottom">
-                <span>Monitor signals</span>
-                <span>Employees</span>
-            </div>
-
-        </div>
-
-
-        <div class="stat-card glass-card">
-
-            <div class="stat-top">
-                <div class="stat-icon purple">✓</div>
-                <span class="stat-label">LOW RISK</span>
-            </div>
-
-            <div class="stat-value" id="lowRisk">-</div>
-
-            <div class="stat-bottom">
-                <span class="stat-positive">● Stable</span>
-                <span>Employees</span>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- EMPLOYEE TABLE -->
-
-    <section class="employee-card glass-card">
-
-        <div class="card-header">
-
-            <div>
-                <span class="section-label">
-                    WORKFORCE RISK INTELLIGENCE
+                <span>
+                    WorkforceAI
                 </span>
 
-                <h2>
-                    Employee Risk Overview
-                </h2>
             </div>
 
-            <span class="live-pill">
-                LIVE DATA
-            </span>
 
-        </div>
+            <div class="hero-content">
 
-        <div id="tableContainer" class="loading">
-            Loading employee intelligence...
-        </div>
-
-    </section>
+                <p class="eyebrow">
+                    AI-POWERED WORKFORCE INTELLIGENCE
+                </p>
 
 
-    <footer class="dashboard-footer">
+                <h1>
 
-        <span>
-            Nexora Workforce Intelligence
-        </span>
+                    Understand your
+                    <span>workforce.</span>
 
-        <span>
-            Synthetic workforce dataset • Qwen-powered analysis
-        </span>
+                    <br>
 
-    </footer>
+                    Make smarter decisions.
 
-</main>
+                </h1>
 
 
-<script>
+                <p class="hero-description">
 
-async function loadEmployees() {
+                    Transform employee data into meaningful insights,
+                    performance intelligence and actionable HR decisions.
 
-    const tableContainer =
-        document.getElementById("tableContainer");
-
-    tableContainer.innerHTML =
-        "<div class='loading'>Refreshing workforce intelligence...</div>";
-
-    try {
-
-        const response =
-            await fetch("/api/employees");
-
-        if (!response.ok) {
-            throw new Error("Failed to load employees");
-        }
-
-        const employees =
-            await response.json();
-
-        updateSummary(employees);
-        renderEmployees(employees);
-
-    } catch (error) {
-
-        tableContainer.innerHTML =
-            "<div class='loading'>Unable to load employee data.</div>";
-
-        console.error(error);
-    }
-}
+                </p>
 
 
-function updateSummary(employees) {
+                <div class="intelligence-pills">
 
-    document.getElementById("totalEmployees").textContent =
-        employees.length;
+                    <div class="pill">
 
-    document.getElementById("highRisk").textContent =
-        employees.filter(
-            e => e.risk.risk_level === "HIGH"
-        ).length;
+                        <span class="pill-dot"></span>
 
-    document.getElementById("mediumRisk").textContent =
-        employees.filter(
-            e => e.risk.risk_level === "MEDIUM"
-        ).length;
+                        Performance Intelligence
 
-    document.getElementById("lowRisk").textContent =
-        employees.filter(
-            e => e.risk.risk_level === "LOW"
-        ).length;
-}
+                    </div>
 
 
-function renderEmployees(employees) {
+                    <div class="pill">
 
-    let html = `
-        <div class="table-wrapper">
+                        <span class="pill-dot"></span>
 
-        <table>
+                        Workforce Insights
 
-            <thead>
-
-                <tr>
-                    <th>EMPLOYEE</th>
-                    <th>ROLE</th>
-                    <th>DEPARTMENT</th>
-                    <th>RISK SCORE</th>
-                    <th>RISK LEVEL</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-    `;
-
-    employees.forEach(employee => {
-
-        const riskLevel =
-            employee.risk.risk_level;
-
-        html += `
-            <tr onclick="openEmployee('${employee.employee_id}')">
-
-                <td>
-                    <span class="employee-name">
-                        ${employee.name}
-                    </span>
-
-                    <span class="employee-code">
-                        ${employee.employee_id}
-                    </span>
-                </td>
-
-                <td>
-                    ${employee.role}
-                </td>
-
-                <td>
-                    ${employee.department}
-                </td>
-
-                <td>
-                    <span class="score">
-                        ${employee.risk.risk_score}
-                    </span>
-                </td>
-
-                <td>
-                    <span class="risk ${riskLevel.toLowerCase()}">
-                        ${riskLevel}
-                    </span>
-                </td>
-
-            </tr>
-        `;
-    });
-
-    html += `
-            </tbody>
-
-        </table>
-
-        </div>
-    `;
-
-    document.getElementById("tableContainer").innerHTML =
-        html;
-}
+                    </div>
 
 
-function openEmployee(employeeId) {
+                    <div class="pill">
 
-    window.location.href =
-        `/employee/${employeeId}`;
-}
+                        <span class="pill-dot"></span>
+
+                        AI Recommendations
+
+                    </div>
+
+                </div>
+
+            </div>
 
 
-loadEmployees();
+            <p class="copyright">
 
-</script>
+                © 2026 WorkforceAI
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================================
+             RIGHT SIDE LOGIN
+        ========================================== -->
+
+        <section class="login-section">
+
+            <div class="login-card">
+
+
+                <!-- LOGIN HEADER -->
+
+                <div class="login-header">
+
+                    <div class="mini-icon">
+                        ✦
+                    </div>
+
+
+                    <h2>
+                        Welcome back
+                    </h2>
+
+
+                    <p>
+
+                        Sign in to your workforce intelligence
+                        workspace.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================
+                     PASSWORD LOGIN
+                ================================== -->
+
+                <form id="loginForm">
+
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            Work email
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@company.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="input-group">
+
+
+                        <div class="password-label">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+
+                            <button
+                                type="button"
+                                class="forgot-btn"
+                                id="forgotPasswordButton"
+                            >
+                                Forgot password?
+                            </button>
+
+                        </div>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+
+                        <span>
+                            Sign in to WorkforceAI
+                        </span>
+
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- =================================
+                     DIVIDER
+                ================================== -->
+
+                <div class="divider">
+
+                    <span></span>
+
+                    <p>
+                        OR
+                    </p>
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- =================================
+                     GOOGLE LOGIN
+                ================================== -->
+
+                <div
+                    id="googleButton"
+                    class="google-login-container"
+                >
+                </div>
+
+
+                <p
+                    id="googleStatus"
+                    class="google-status"
+                >
+                </p>
+
+
+
+                <!-- SECURITY -->
+
+                <p class="security-note">
+
+                    Your workforce data is protected
+                    with secure authentication.
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =============================================
+         GOOGLE IDENTITY SERVICES
+    ============================================== -->
+
+    <script
+        src="https://accounts.google.com/gsi/client"
+        async
+        defer
+    ></script>
+
+
+    <!-- WORKFORCEAI JAVASCRIPT -->
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>

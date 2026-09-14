@@ -927,7 +927,7 @@ async function loadEmployee() {
     try {
 
         const response =
-            await fetch(`/api/intelligence/${employeeId}`);
+            await fetch(`/api/ai/employee/${employeeId}`);
 
         if (!response.ok) {
             throw new Error("Employee not found");

@@ -1,42 +1,37 @@
 import requests
 
-
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL = "qwen3:4b"
 
-def build_evidence(employee, risk):
-    return {
-        "employee_id": employee["employee_id"],
-        "name": employee["name"],
-        "role": employee["role"],
-        "department": employee["department"],
-        "risk_score": risk["risk_score"],
-        "risk_level": risk["risk_level"],
-        "risk_factors": risk["factors"],
-        "attendance": employee["attendance"],
-        "performance": employee["performance"],
-        "engagement": employee["engagement"],
-        "feedback": employee["feedback"],
-        "skills": employee["skills"],
-        "career": employee["career"]
-    }
 
-def analyze_employee(evidence):
+def analyze_employee(evidence, risk):
     prompt = f"""
-You are an HR workforce intelligence analyst.
+You are an enterprise HR workforce intelligence analyst.
 
 Analyze the employee evidence below.
 
 IMPORTANT RULES:
-- The risk score and risk level are calculated by the backend.
-- Do NOT change or recalculate the official risk score.
+- The official risk score and risk level are calculated by the backend.
+- Do NOT change, override, or recalculate the official risk score.
 - Do NOT invent employee data.
-- Use only the evidence provided.
-- Identify meaningful patterns across different HR data sources.
-- Explain possible concerns carefully. Do not claim causation.
-- Recommend practical HR actions.
+- Use ONLY the evidence provided.
+- Identify patterns across multiple HR data sources.
+- Do not claim causation.
+- Distinguish retention risk from performance concerns and skill gaps.
+- Recommend practical, supportive HR actions.
+- Recommendations must be based on evidence.
 
-Return your response using these sections:
+OFFICIAL RISK:
+Score: {risk["risk_score"]}
+Level: {risk["risk_level"]}
+
+RISK FACTORS:
+{risk["factors"]}
+
+EMPLOYEE EVIDENCE:
+{evidence}
+
+Return exactly these sections:
 
 RISK ASSESSMENT
 KEY SIGNALS
@@ -44,9 +39,6 @@ CROSS-SOURCE INSIGHT
 RECOMMENDED ACTIONS
 CONFIDENCE
 LIMITATIONS
-
-EMPLOYEE EVIDENCE:
-{evidence}
 """
 
     response = requests.post(
