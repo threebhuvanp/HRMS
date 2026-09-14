@@ -31,6 +31,9 @@ def employees():
 
     return jsonify(result)
 
+@app.route("/employee/<employee_id>")
+def employee_page(employee_id):
+    return send_from_directory(FRONTEND_DIR, "employee.html")
 
 @app.route("/api/employees/<employee_id>")
 def employee_details(employee_id):

@@ -227,7 +227,7 @@ function renderEmployees(employees) {
         <table>
 
             <thead>
-                <tr>
+                <tr onclick="openEmployee('${employee.employee_id}')" style="cursor: pointer;">
                     <th>EMPLOYEE</th>
                     <th>ROLE</th>
                     <th>DEPARTMENT</th>
@@ -274,6 +274,10 @@ function renderEmployees(employees) {
     `;
 
     document.getElementById("tableContainer").innerHTML = html;
+}
+
+function openEmployee(employeeId) {
+    window.location.href = `/employee/${employeeId}`;
 }
 
 
