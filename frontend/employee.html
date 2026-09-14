@@ -103,7 +103,7 @@ async function loadEmployee() {
 
     try {
 
-        const response = await fetch(`/api/employees/${employeeId}`);
+        const response = await fetch(`/api/intelligence/${employeeId}`);
 
         if (!response.ok) {
             throw new Error("Employee not found");
@@ -111,36 +111,13 @@ async function loadEmployee() {
 
         const data = await response.json();
 
-        const employee = data.profile;
+        const employee = data.employee;
         const risk = data.risk;
-
+        const aiAnalysis = data.ai_analysis;
+        
         document.getElementById("content").innerHTML = `
             <div class="card profile">
-
-                <div>
-                    <div class="employee-name">
-                        ${employee.name}
-                    </div>
-
-                    <div class="employee-id">
-                        ${employee.employee_id}
-                    </div>
-
-                    <p>
-                        ${employee.role} · ${employee.department}
-                    </p>
-                </div>
-
-                <div class="risk-box">
-                    <div class="risk-score">
-                        ${risk.risk_score}
-                    </div>
-
-                    <div class="risk-level">
-                        ${risk.risk_level} RISK
-                    </div>
-                </div>
-
+                ...
             </div>
 
             <div class="card">
@@ -156,8 +133,20 @@ async function loadEmployee() {
                 `).join("")}
 
             </div>
-        `;
 
+            <div class="card">
+                <h2>AI Workforce Insight</h2>
+
+                <pre style="
+                    white-space: pre-wrap;
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #cbd5e1;
+                ">${aiAnalysis}</pre>
+            </div>
+        `;
+        
+        
     } catch (error) {
 
         document.getElementById("content").innerHTML =

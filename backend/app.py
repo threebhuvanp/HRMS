@@ -35,6 +35,24 @@ def employees():
 @app.route("/employee/<employee_id>")
 def employee_page(employee_id):
     return send_from_directory(FRONTEND_DIR, "employee.html")
+    
+@app.route("/api/intelligence/<employee_id>")
+def employee_intelligence(employee_id):
+    data = load_all_data()
+    employee = data.get(employee_id)
+
+    if not employee:
+        return jsonify({"error": "Employee not found"}), 404
+
+    risk = calculate_risk(employee)
+    evidence = build_evidence(employee, risk)
+    analysis = analyze_employee(evidence)
+
+    return jsonify({
+        "employee": employee,
+        "risk": risk,
+        "ai_analysis": analysis
+    })
 
 @app.route("/api/employees/<employee_id>")
 def employee_details(employee_id):
